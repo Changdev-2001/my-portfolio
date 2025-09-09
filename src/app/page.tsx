@@ -1,8 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { motion, useAnimation } from "framer-motion";
-import { useInView } from "react-intersection-observer";
+import { motion } from "framer-motion";
 import Image from "next/image";
 import Navbar from "@/components/sections/Navbar";
 import {
@@ -21,7 +20,10 @@ import {
   ExternalLink,
   Download,
   X,
+  Palette,
+  Layout,
 } from "lucide-react";
+import Link from "next/link";
 
 export default function Home() {
   const [isLoaded, setIsLoaded] = useState(false);
@@ -79,10 +81,13 @@ export default function Home() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: isLoaded ? 1 : 0, y: isLoaded ? 0 : 20 }}
               transition={{ duration: 0.6, delay: 0.2 }}
-              className="inline-flex items-center gap-2 px-4 py-2 bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm rounded-full text-sm font-medium text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700"
+              className="inline-flex relative items-center gap-2 px-4 py-2 bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm rounded-full text-sm font-medium text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700"
             >
               <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
               Available for new opportunities
+              <span className="absolute bottom-1 -right-20 w-10 h-10 bg-white dark:bg-slate-800 rounded-full shadow-soft flex items-center justify-center animate-floating">
+                <Layout className="w-5 h-5 text-indigo-500" />
+              </span>
             </motion.div>
 
             <motion.h1
@@ -108,11 +113,14 @@ export default function Home() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: isLoaded ? 1 : 0, y: isLoaded ? 0 : 20 }}
               transition={{ duration: 0.6, delay: 0.5 }}
-              className="text-lg text-slate-600 dark:text-slate-400 max-w-lg leading-relaxed"
+              className="text-lg relative text-slate-600 dark:text-slate-400 max-w-lg leading-relaxed"
             >
               I craft modern web applications with React, Node.js, Express, and
               MongoDB. Passionate about creating clean, efficient, and
               user-friendly experiences that make a difference.
+              <span className="absolute -top-8 right-2 w-10 h-10 bg-white dark:bg-slate-800 rounded-full shadow-soft flex items-center justify-center animate-floating">
+                <Palette className="w-5 h-5 text-pink-500" />
+              </span>
             </motion.p>
 
             <motion.div
@@ -137,10 +145,10 @@ export default function Home() {
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: isLoaded ? 1 : 0, scale: isLoaded ? 1 : 0.8 }}
             transition={{ duration: 0.8, delay: 0.4 }}
-            className="flex justify-center lg:justify-end"
+            className="flex justify-center lg:justify-center"
           >
             <div className="relative">
-              <div className="w-80 h-80 lg:w-96 lg:h-96 rounded-full bg-gradient-primary p-1 animate-pulse-slow">
+              <div className="w-80 h-80 lg:w-80 lg:h-80 rounded-full bg-gradient-primary p-1 animate-pulse-slow">
                 <div className="w-full h-full rounded-full bg-white dark:bg-slate-900 flex items-center justify-center relative overflow-hidden">
                   <div className="absolute inset-0 bg-gradient-animated opacity-20 animate-gradient-shift"></div>
                   <div className="relative z-10 text-center">
@@ -164,7 +172,7 @@ export default function Home() {
               >
                 <Database className="w-6 h-6 text-purple-600" />
               </div>
-              <div className="absolute top-1/2 -right-8 w-10 h-10 bg-white dark:bg-slate-800 rounded-full shadow-soft flex items-center justify-center animate-floating">
+              <div className="absolute top-1/2 -right-16 w-10 h-10 bg-white dark:bg-slate-800 rounded-full shadow-soft flex items-center justify-center animate-floating">
                 <Globe className="w-5 h-5 text-green-600" />
               </div>
             </div>
@@ -230,7 +238,7 @@ export default function Home() {
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
             viewport={{ once: true }}
-            className="text-center mb-16"
+            className=" relative text-center mb-16"
           >
             <h2 className="text-4xl lg:text-5xl font-bold mb-6 gradient-text">
               About Me
@@ -239,9 +247,12 @@ export default function Home() {
               A passionate developer who loves turning ideas into reality
               through code
             </p>
+            <span className="absolute top-1 right-1/3 w-10 h-10 bg-transparent dark:bg-slate-800 rounded-full  flex items-center justify-center animate-bounce-slow">
+              <Code className="w-6 h-6 text-blue-600" />
+            </span>
           </motion.div>
 
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
+          <div className=" grid lg:grid-cols-2 gap-12 items-center">
             <motion.div
               initial={{ opacity: 0, x: -50 }}
               whileInView={{ opacity: 1, x: 0 }}
@@ -249,12 +260,18 @@ export default function Home() {
               viewport={{ once: true }}
               className="space-y-6"
             >
-              <p className="text-lg text-slate-600 dark:text-slate-400 leading-relaxed">
+              <p className=" relative text-lg text-slate-600 dark:text-slate-400 leading-relaxed">
                 I&apos;m a passionate MERN Stack Developer with a strong
                 foundation in building full-stack web applications. My journey
                 in web development started with a curiosity about how websites
                 work, which led me to dive deep into modern JavaScript
                 frameworks and libraries.
+                <span
+                  className="absolute -top-10 left-2 w-12 h-12 bg-transparent dark:bg-slate-800 rounded-full  flex items-center justify-center animate-bounce-slow"
+                  style={{ animationDelay: "0.5s" }}
+                >
+                  <Database className="w-6 h-6 text-purple-600" />
+                </span>
               </p>
               <p className="text-lg text-slate-600 dark:text-slate-400 leading-relaxed">
                 I specialize in creating responsive, user-friendly interfaces
@@ -264,20 +281,23 @@ export default function Home() {
                 elegant solutions.
               </p>
 
-              <div className="grid grid-cols-2 gap-4 pt-6">
+              <div className=" relative grid grid-cols-2 gap-4 pt-6">
                 <div className="text-center p-4 bg-white dark:bg-slate-800 rounded-xl shadow-soft hover-card">
                   <div className="text-3xl font-bold gradient-text mb-2">1</div>
                   <div className="text-slate-600 dark:text-slate-400">
                     Years Experience
                   </div>
                 </div>
-                <div className="text-center p-4 bg-white dark:bg-slate-800 rounded-xl shadow-soft hover-card">
+                <div className=" relative text-center p-4 bg-white dark:bg-slate-800 rounded-xl shadow-soft hover-card">
                   <div className="text-3xl font-bold gradient-text mb-2">
                     20+
                   </div>
                   <div className="text-slate-600 dark:text-slate-400">
                     Projects Completed
                   </div>
+                </div>
+                <div className="absolute top-1/2 -right-8 w-10 h-10 bg-transparent dark:bg-slate-800 rounded-full  flex items-center justify-center animate-floating">
+                  <Globe className="w-5 h-5 text-green-600" />
                 </div>
               </div>
             </motion.div>
@@ -430,41 +450,6 @@ export default function Home() {
               viewport={{ once: true }}
               className="timeline"
             >
-              {/* Intern Web Developer */}
-              <div className="timeline-item">
-                <div className="bg-white dark:bg-slate-800 rounded-2xl p-8 shadow-soft-lg hover-card">
-                  <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between mb-4">
-                    <div>
-                      <h3 className="text-2xl font-bold text-slate-800 dark:text-slate-200">
-                        Intern Web Developer
-                      </h3>
-                      <p className="text-lg text-slate-600 dark:text-slate-400">
-                        Web Development Internship
-                      </p>
-                    </div>
-                    <div className="mt-2 lg:mt-0">
-                      <span className="inline-block px-4 py-2 bg-gradient-secondary text-white rounded-full text-sm font-semibold">
-                        Feb 2024 - Aug 2024
-                      </span>
-                    </div>
-                  </div>
-                  <div className="space-y-3">
-                    {[
-                      "Worked on different website modules and components",
-                      "Learned and improved technical skills through hands-on experience",
-                      "Collaborated with senior developers on various web development projects",
-                      "Gained practical experience with modern web technologies and best practices",
-                    ].map((item, index) => (
-                      <div key={index} className="flex items-start gap-3">
-                        <div className="w-2 h-2 bg-gradient-secondary rounded-full mt-2 flex-shrink-0"></div>
-                        <span className="text-slate-600 dark:text-slate-400">
-                          {item}
-                        </span>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              </div>
               {/* Junior Software Developer */}
               <div className="timeline-item">
                 <div className="bg-white dark:bg-slate-800 rounded-2xl p-8 shadow-soft-lg hover-card">
@@ -492,6 +477,41 @@ export default function Home() {
                     ].map((item, index) => (
                       <div key={index} className="flex items-start gap-3">
                         <div className="w-2 h-2 bg-gradient-primary rounded-full mt-2 flex-shrink-0"></div>
+                        <span className="text-slate-600 dark:text-slate-400">
+                          {item}
+                        </span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+              {/* Intern Web Developer */}
+              <div className="timeline-item">
+                <div className="bg-white dark:bg-slate-800 rounded-2xl p-8 shadow-soft-lg hover-card">
+                  <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between mb-4">
+                    <div>
+                      <h3 className="text-2xl font-bold text-slate-800 dark:text-slate-200">
+                        Intern Web Developer
+                      </h3>
+                      <p className="text-lg text-slate-600 dark:text-slate-400">
+                        Web Development Internship
+                      </p>
+                    </div>
+                    <div className="mt-2 lg:mt-0">
+                      <span className="inline-block px-4 py-2 bg-gradient-secondary text-white rounded-full text-sm font-semibold">
+                        Feb 2024 - Aug 2024
+                      </span>
+                    </div>
+                  </div>
+                  <div className="space-y-3">
+                    {[
+                      "Worked on different website modules and components",
+                      "Learned and improved technical skills through hands-on experience",
+                      "Collaborated with senior developers on various web development projects",
+                      "Gained practical experience with modern web technologies and best practices",
+                    ].map((item, index) => (
+                      <div key={index} className="flex items-start gap-3">
+                        <div className="w-2 h-2 bg-gradient-secondary rounded-full mt-2 flex-shrink-0"></div>
                         <span className="text-slate-600 dark:text-slate-400">
                           {item}
                         </span>
@@ -620,7 +640,7 @@ export default function Home() {
                     className="flex gap-4"
                     onClick={(e) => e.stopPropagation()}
                   >
-                    <a
+                    <Link
                       href={project.demo}
                       target="_blank"
                       rel="noopener noreferrer"
@@ -628,8 +648,8 @@ export default function Home() {
                     >
                       <ExternalLink className="w-4 h-4" />
                       View Demo
-                    </a>
-                    <a
+                    </Link>
+                    <Link
                       href={project.code}
                       target="_blank"
                       rel="noopener noreferrer"
@@ -637,7 +657,7 @@ export default function Home() {
                     >
                       <Github className="w-4 h-4" />
                       Source Code
-                    </a>
+                    </Link>
                   </div>
                 </div>
               </motion.div>
