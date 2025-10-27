@@ -1,0 +1,12 @@
+# [START app_yaml]
+runtime: nodejs20
+entrypoint: npm start
+
+env_variables:
+  NODE_ENV: production
+
+handlers:
+  - url: /.*
+    secure: always
+    script: auto
+# [END app_yaml]
