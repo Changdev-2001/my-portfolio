@@ -267,7 +267,7 @@ export default function Home() {
                 work, which led me to dive deep into modern JavaScript
                 frameworks and libraries.
                 <span
-                  className="absolute -top-10 left-2 w-12 h-12 bg-transparent dark:bg-slate-800 rounded-full  flex items-center justify-center animate-bounce-slow"
+                  className="absolute -top-10 left-2 w-9 h-9 bg-transparent dark:bg-slate-800 rounded-full  flex items-center justify-center animate-bounce-slow"
                   style={{ animationDelay: "0.5s" }}
                 >
                   <Database className="w-6 h-6 text-purple-600" />
