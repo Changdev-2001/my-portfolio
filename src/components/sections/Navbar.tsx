@@ -2,11 +2,10 @@
 
 import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { NavigationMenu, NavigationMenuList, NavigationMenuItem, NavigationMenuLink } from '@/components/ui/navigation-menu';
 import { cn, scrollToSection } from '@/lib/utils';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Menu, X, Download, Mail } from 'lucide-react';
+import { Menu, X, Download } from 'lucide-react';
 import { ThemeToggle } from '@/components/ui/theme-toggle';
 
 const navItems = [
@@ -45,9 +44,10 @@ export default function Navbar() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const handleNavClick = (id: string) => {
-    scrollToSection(id);
+  const handleNavClick = (id: string, delay = 0) => {
     setMobileMenuOpen(false);
+    setActiveSection(id);
+    window.setTimeout(() => scrollToSection(id), delay);
   };
 
   return (
@@ -88,9 +88,16 @@ export default function Navbar() {
                         ? 'text-white bg-gradient-primary shadow-glow' 
                         : 'text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-white/10 dark:hover:bg-slate-800/10'
                     )}
-                    onClick={() => handleNavClick(item.id)}
                   >
-                    <span>{item.name}</span>
+                    <a
+                      href={`#${item.id}`}
+                      onClick={(event) => {
+                        event.preventDefault();
+                        handleNavClick(item.id);
+                      }}
+                    >
+                      {item.name}
+                    </a>
                   </NavigationMenuLink>
                 </motion.div>
               </NavigationMenuItem>
@@ -151,17 +158,21 @@ export default function Navbar() {
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ delay: index * 0.1 }}
                   >
-                    <button
+                    <a
+                      href={`#${item.id}`}
                       className={cn(
-                        'w-full text-left px-4 py-3 rounded-lg text-sm font-medium transition-all duration-300',
+                        'block w-full text-left px-4 py-3 rounded-lg text-sm font-medium transition-all duration-300',
                         activeSection === item.id 
                           ? 'text-white bg-gradient-primary shadow-glow' 
                           : 'text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800'
                       )}
-                      onClick={() => handleNavClick(item.id)}
+                      onClick={(event) => {
+                        event.preventDefault();
+                        handleNavClick(item.id, 320);
+                      }}
                     >
                       {item.name}
-                    </button>
+                    </a>
                   </motion.div>
                 ))}
                 

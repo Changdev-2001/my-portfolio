@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, type FormEvent } from "react";
 import { motion } from "framer-motion";
 import Image from "next/image";
 import Navbar from "@/components/sections/Navbar";
@@ -24,6 +24,19 @@ import {
   Layout,
 } from "lucide-react";
 import Link from "next/link";
+
+function WhatsAppIcon({ className }: { className?: string }) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      aria-hidden="true"
+      className={className}
+      fill="currentColor"
+    >
+      <path d="M20.52 3.48A11.78 11.78 0 0 0 12.14 0C5.62 0 .31 5.31.31 11.84c0 2.08.54 4.12 1.58 5.91L.21 23.89l6.29-1.65a11.9 11.9 0 0 0 5.64 1.43h.01c6.53 0 11.84-5.31 11.84-11.84 0-3.16-1.23-6.13-3.47-8.35Zm-8.37 18.2h-.01c-1.78 0-3.52-.48-5.04-1.38l-.36-.21-3.73.98 1-3.64-.24-.37a9.8 9.8 0 0 1-1.5-5.22c0-5.44 4.43-9.87 9.88-9.87 2.64 0 5.12 1.03 6.99 2.9a9.81 9.81 0 0 1 2.89 6.98c0 5.44-4.43 9.87-9.88 9.87Zm5.42-7.39c-.3-.15-1.76-.87-2.03-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.94 1.17-.17.2-.35.22-.64.07-.3-.15-1.26-.46-2.39-1.48-.88-.79-1.48-1.76-1.65-2.05-.17-.3-.02-.46.13-.61.13-.13.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.07-.15-.67-1.61-.92-2.2-.24-.58-.49-.5-.67-.51h-.57c-.2 0-.52.07-.79.37-.27.3-1.04 1.02-1.04 2.48s1.06 2.88 1.21 3.08c.15.2 2.09 3.19 5.06 4.47.71.31 1.26.49 1.69.62.71.23 1.36.2 1.87.12.57-.08 1.76-.72 2.01-1.41.25-.69.25-1.29.17-1.41-.07-.13-.27-.2-.57-.35Z" />
+    </svg>
+  );
+}
 
 export default function Home() {
   const [isLoaded, setIsLoaded] = useState(false);
@@ -51,8 +64,34 @@ export default function Home() {
     }, 300);
   };
 
+  const handleContactSubmit = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
+    const formData = new FormData(event.currentTarget);
+    const name = String(formData.get("name") ?? "").trim();
+    const email = String(formData.get("email") ?? "").trim();
+    const message = String(formData.get("message") ?? "").trim();
+
+    const whatsappMessage = [
+      "*Portfolio Message*",
+      "",
+      `*Name:* _${name}_`,
+      `*Email:* _${email}_`,
+      "",
+      "*Message:*",
+      `_${message}_`,
+    ].join("\n");
+
+    const whatsappUrl = `https://wa.me/919689084883?text=${encodeURIComponent(
+      whatsappMessage
+    )}`;
+
+    window.open(whatsappUrl, "_blank", "noopener,noreferrer");
+    event.currentTarget.reset();
+  };
+
   return (
-    <main className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100 dark:from-slate-900 dark:via-slate-800 dark:to-slate-900">
+    <main className="min-h-screen w-full overflow-x-hidden bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100 dark:from-slate-900 dark:via-slate-800 dark:to-slate-900">
       <Navbar />
 
       {/* Hero Section */}
@@ -85,7 +124,7 @@ export default function Home() {
             >
               <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
               Available for new opportunities
-              <span className="absolute bottom-1 -right-20 w-10 h-10 bg-white dark:bg-slate-800 rounded-full shadow-soft flex items-center justify-center animate-floating">
+              <span className="absolute bottom-1 right-2 md:-right-20 w-10 h-10 bg-white dark:bg-slate-800 rounded-full shadow-soft flex items-center justify-center animate-floating">
                 <Layout className="w-5 h-5 text-indigo-500" />
               </span>
             </motion.div>
@@ -148,7 +187,7 @@ export default function Home() {
             className="flex justify-center lg:justify-center"
           >
             <div className="relative">
-              <div className="w-80 h-80 lg:w-80 lg:h-80 rounded-full bg-gradient-primary p-1 animate-pulse-slow">
+              <div className="w-[min(20rem,calc(100vw-3rem))] h-[min(20rem,calc(100vw-3rem))] lg:w-80 lg:h-80 rounded-full bg-gradient-primary p-1 animate-pulse-slow">
                 <div className="w-full h-full rounded-full bg-white dark:bg-slate-900 flex items-center justify-center relative overflow-hidden">
                   <div className="absolute inset-0 bg-gradient-animated opacity-20 animate-gradient-shift"></div>
                   <div className="relative z-10 text-center">
@@ -163,7 +202,7 @@ export default function Home() {
               </div>
 
               {/* Floating icons */}
-              <div className="absolute -top-4 -right-4 w-12 h-12 bg-white dark:bg-slate-800 rounded-full shadow-soft-lg flex items-center justify-center animate-bounce-slow">
+              <div className="absolute -top-4 right-0 md:-right-4 w-12 h-12 bg-white dark:bg-slate-800 rounded-full shadow-soft-lg flex items-center justify-center animate-bounce-slow">
                 <Code className="w-6 h-6 text-blue-600" />
               </div>
               <div
@@ -172,7 +211,7 @@ export default function Home() {
               >
                 <Database className="w-6 h-6 text-purple-600" />
               </div>
-              <div className="absolute top-1/2 -right-16 w-10 h-10 bg-white dark:bg-slate-800 rounded-full shadow-soft flex items-center justify-center animate-floating">
+              <div className="absolute top-1/2 right-0 md:-right-16 w-10 h-10 bg-white dark:bg-slate-800 rounded-full shadow-soft flex items-center justify-center animate-floating">
                 <Globe className="w-5 h-5 text-green-600" />
               </div>
             </div>
@@ -296,7 +335,7 @@ export default function Home() {
                     Projects Completed
                   </div>
                 </div>
-                <div className="absolute top-1/2 -right-8 w-10 h-10 bg-transparent dark:bg-slate-800 rounded-full  flex items-center justify-center animate-floating">
+                <div className="absolute top-1/2 right-0 md:-right-8 w-10 h-10 bg-transparent dark:bg-slate-800 rounded-full  flex items-center justify-center animate-floating">
                   <Globe className="w-5 h-5 text-green-600" />
                 </div>
               </div>
@@ -800,7 +839,7 @@ export default function Home() {
               <h3 className="text-2xl font-bold text-slate-800 dark:text-slate-200 mb-6">
                 Send Me a Message
               </h3>
-              <form className="space-y-6">
+              <form className="space-y-6" onSubmit={handleContactSubmit}>
                 <div>
                   <label
                     htmlFor="name"
@@ -811,6 +850,8 @@ export default function Home() {
                   <input
                     type="text"
                     id="name"
+                    name="name"
+                    required
                     className="w-full px-4 py-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300"
                     placeholder="Your name"
                   />
@@ -825,6 +866,8 @@ export default function Home() {
                   <input
                     type="email"
                     id="email"
+                    name="email"
+                    required
                     className="w-full px-4 py-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300"
                     placeholder="Your email"
                   />
@@ -838,6 +881,8 @@ export default function Home() {
                   </label>
                   <textarea
                     id="message"
+                    name="message"
+                    required
                     rows={4}
                     className="w-full px-4 py-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300 resize-none"
                     placeholder="Your message"
@@ -845,8 +890,9 @@ export default function Home() {
                 </div>
                 <button
                   type="submit"
-                  className="w-full btn-primary px-6 py-3 rounded-xl text-white font-semibold shadow-glow hover:shadow-glow-lg transition-all duration-300"
+                  className="w-full btn-primary px-6 py-3 rounded-xl text-white font-semibold shadow-glow hover:shadow-glow-lg transition-all duration-300 flex items-center justify-center gap-3"
                 >
+                  <WhatsAppIcon className="w-5 h-5" />
                   Send Message
                 </button>
               </form>
@@ -962,7 +1008,7 @@ export default function Home() {
                 <Image
                   width={1000}
                   height={1000}
-                  src="/ResumePNG.png"
+                  src="/Resume.jpg"
                   alt="Resume Preview"
                   className="max-w-full h-auto rounded-lg shadow-lg"
                 />

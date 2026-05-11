@@ -10,11 +10,13 @@ export function scrollToSection(id: string) {
   if (element) {
     const navbarHeight = 80; // Approximate height of navbar
     const elementPosition = element.getBoundingClientRect().top;
-    const offsetPosition = elementPosition + window.pageYOffset - navbarHeight;
+    const offsetPosition = elementPosition + window.scrollY - navbarHeight;
     
     window.scrollTo({
       top: offsetPosition,
       behavior: 'smooth'
     });
+
+    window.history.replaceState(null, '', `#${id}`);
   }
 }
